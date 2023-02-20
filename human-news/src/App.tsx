@@ -77,6 +77,7 @@ function App() {
           className="w-1/4 h-1/4 min-h-[200px] min-w-[200px] bg-gray-200 rounded-lg m-3 grid place-items-center drop-shadow-md"
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 5, repeat: Infinity }}
+          exit={{ opacity: 0 }}
         >
           Finding News...
         </motion.div>
