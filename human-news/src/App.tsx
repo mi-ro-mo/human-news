@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className=" flex flex-col items-center w-screen h-full min-h-screen min-w-screen bg-gray-400 overflow-x-hidden">
-      <div className="w-1/3 bg-gray-300 h-30 rounded-lg m-3 flex flex-row justify-center drop-shadow-md">
+      <div className="w-full sm:w-1/3 m:w-2/3 bg-gray-300 h-30 rounded-lg m-3 flex flex-row justify-center drop-shadow-md">
         <div className="flex flex-col w-full text-left">
           <h1 className="text-4xl font-bold m-5 float-left">Human News</h1>
           <p className="my-3 mx-5">News for humans, by... humans?</p>
@@ -72,20 +72,21 @@ function App() {
           </button>
         )}
       </div>
+
       {state.matches("pending") && (
         <motion.div
-          className="w-1/4 h-1/4 min-h-[200px] min-w-[200px] bg-gray-200 rounded-lg m-3 grid place-items-center drop-shadow-md"
+          className="w-full sm:w-1/3 h-1/3 min-h-[200px] min-w-[200px] bg-gray-200 rounded-lg m-3 grid place-items-center drop-shadow-md"
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 5, repeat: Infinity }}
           exit={{ opacity: 0 }}
         >
-          Finding News...
+          Getting News...
         </motion.div>
       )}
 
       {state.matches("success") && (
         <motion.div
-          className=" w-1/3 h-1/2 min-h-[500px] bg-gray-200 rounded-lg m-3 p-5 drop-shadow-md"
+          className=" w-full sm:w-1/3 min-h-[500px] bg-gray-200 rounded-lg m-3 p-5 drop-shadow-md"
           animate={{ opacity: [0, 1] }}
         >
           {state.matches("success") && state.context.results}
@@ -93,7 +94,7 @@ function App() {
       )}
       {state.matches("failed") && (
         <motion.div
-          className=" w-1/3 h-1/2 min-h-[500px] bg-gray-200 rounded-lg m-3 p-5 drop-shadow-md"
+          className=" w-full sm:w-1/3 h-1/2 min-h-[500px] bg-gray-200 rounded-lg m-3 p-5 drop-shadow-md"
           animate={{ opacity: [0, 1] }}
         >
           {state.matches("failed") && state.context.message}
@@ -104,9 +105,8 @@ function App() {
 }
 
 function formatString(str: string) {
-  // Parse string
   const text = str.split("[*]");
-  console.log(str);
+
   return (
     <>
       <h2 className="text-xl font-bold">
