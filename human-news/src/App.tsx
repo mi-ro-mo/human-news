@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import "./index.css";
 import fetchMachine from "./fetch";
 import { useMachine } from "@xstate/react";
+import logo from "./spinner.gif";
+import { useEffect } from "react";
 
 const configuration = new Configuration({
   organization: import.meta.env.VITE_OPEN_AI_ORG,
@@ -13,6 +15,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const prompt = import.meta.env.VITE_PROMPT;
+const quips = import.meta.env.VITE_LOADING_QUIPS.split("*");
 
 function App() {
   const [state, send] = useMachine(fetchMachine, {
@@ -36,6 +39,19 @@ function App() {
       },
     },
   });
+
+  useEffect(() => {
+    const onPageLoad = () => {
+      send({ type: "FETCH" });
+    };
+
+    if (document.readyState === "complete") {
+      onPageLoad();
+    } else {
+      window.addEventListener("load", onPageLoad);
+      return () => window.removeEventListener("load", onPageLoad);
+    }
+  }, []);
 
   return (
     <div className=" flex flex-col items-center w-screen h-full min-h-screen min-w-screen bg-gray-400 overflow-x-hidden">
@@ -75,12 +91,13 @@ function App() {
 
       {state.matches("pending") && (
         <motion.div
-          className="w-full sm:w-1/3 h-1/3 min-h-[200px] min-w-[200px] bg-gray-200 rounded-lg m-3 grid place-items-center drop-shadow-md"
+          className="w-full sm:w-1/3 h-1/3 min-h-[200px] min-w-[200px] bg-gray-200 rounded-lg m-3 p-3 grid place-items-center drop-shadow-md text-center"
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 5, repeat: Infinity }}
           exit={{ opacity: 0 }}
         >
-          Getting News...
+          <img src={logo} alt="loading..." />
+          {quips[Math.floor(Math.random() * quips.length)]}
         </motion.div>
       )}
 
