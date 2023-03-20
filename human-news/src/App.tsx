@@ -117,6 +117,9 @@ function App() {
           {state.matches("failed") && state.context.message}
         </motion.div>
       )}
+      <p className="w-full sm:w-1/5 h-[5vh]  text-stone-600 text-center">
+        * Generated entirely by Artifical Intelligence *
+      </p>
     </div>
   );
 }
